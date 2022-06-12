@@ -1,0 +1,4 @@
+t "Natureza"
+t "Parque"
+t "Espaco"
+f "flor"
