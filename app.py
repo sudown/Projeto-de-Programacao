@@ -4,7 +4,7 @@ import customtkinter
 from PIL import ImageTk, Image
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 app = customtkinter.CTk()
 app.geometry("1280x720")
@@ -19,7 +19,7 @@ fontPrimary = "Arial, 24"
 
 ################### CORES ###############
 bgColorPrimary = "#7C4CAF" 
-bgColorSecundary = "#ffc100"
+bgColorSecundary = "#7C4CAF"
 frameHome = Frame(app, bg=bgColorPrimary, height=720, width=1280)
 frameHome.pack()
 
@@ -65,7 +65,6 @@ def temasPortugues():
     buttonFase.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     fase1 = Label(frameHome, image=img)
     fase1.place(relx=0.5, rely=0.45, anchor=tkinter.CENTER)''' #tela de fase
-    
 
 buttonDitado = customtkinter.CTkButton(master=frameHome, text="Ditado", text_font=(fontPrimary))
 buttonPortugues = customtkinter.CTkButton(master=frameHome, text="Português", text_font=(fontPrimary), command=temasPortugues)
