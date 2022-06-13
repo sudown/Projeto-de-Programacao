@@ -3,6 +3,7 @@ import tkinter
 from turtle import color
 import customtkinter
 from PIL import ImageTk, Image
+import random
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -19,6 +20,15 @@ img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
 fontPrimary = "Arial, 24"
 
 ################### CORES ###############
+azul = "#0091ca"
+verde = "#01bc53"
+rosa = "#d7508a"
+branco = "#e2dcd2"
+laranja = "#f07d54"
+pave = "#ffc1ce"
+
+listaCores = [azul, verde, rosa, branco, laranja, pave]
+
 bgColorPrimary = "#7C4CAF" 
 bgColorSecundary = "#7C4CAF"
 frameHome = Frame(app, bg=bgColorPrimary, height=720, width=1280)
@@ -73,7 +83,7 @@ def geraMenuTemas(lingua):
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command="")
+        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command="",fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
 def temasPortugues():
