@@ -1,4 +1,4 @@
-t "Natureza"
-t "Parque"
-t "Espaco"
-f "flor"
+t "Nature"
+t "Park"
+t "Espace"
+f "flower"
