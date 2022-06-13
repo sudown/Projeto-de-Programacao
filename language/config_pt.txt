@@ -1,11 +1,6 @@
 t "Natureza"
-#t "Parque"
 t "Espaço"
 t "Escola"
-#t "Praia"
-#t "Games"
 t "Brinquedos"
-#t "Circo"
-#t "Paises"
 
 f "flor"
