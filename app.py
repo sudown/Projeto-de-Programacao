@@ -1,9 +1,10 @@
 from tkinter import *
 import tkinter
-from turtle import color
 import customtkinter
-from PIL import ImageTk, Image
+from PIL import ImageTk
 import random
+from functools import partial #como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
+                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -14,7 +15,7 @@ app.configure(bg="#fff")
 app.title("APP")
 
 ################### IMAGENS ###############
-img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
+#img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
 
 ################### FONTES ############### se for trocar ou adicionar uma cor ou fonte faça por aqui
 fontPrimary = "Arial, 24"
@@ -48,6 +49,12 @@ def home(telaAtual):
     buttonPortugues.place(relx=0.4, rely=0.5, anchor=tkinter.CENTER)
     buttonEnglish.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
 
+def geraMenuFases(nomeDoTema):
+    print(nomeDoTema)
+    '''fazer aqui uma função que pege o nome das fazes em um arquivo.txt e geras o menu de fases
+       essa função vai fazer praticamente o mesmo que a menu temas, então pode-se reaproveitar boa parte do seu codigo.
+       Entretando será necessário pensar em um jeito de associar as fases aos seus respectivos temas'''
+
 def geraMenuTemas(lingua):
     frameTelaTemas = Frame(frameHome, bg=bgColorSecundary, height=720, width=1280).pack() #faria mais sentido trocar frameHome por app, mas isso não funcionou
     
@@ -77,27 +84,23 @@ def geraMenuTemas(lingua):
     rlx = c = 0.00
     rly = 0.04
     for i in range(0, len(listaTemas)):
+        f_geraMenuFases = partial(geraMenuFases, listaTemas[i])
         rlx += 0.3
         c += 1
         if c == 4:
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command="",fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuFases, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
 def temasPortugues():
-    destroiFrame(frameHome)
-    geraMenuTemas("pt-br")
+    destroiFrame(frameHome) #destroi o frame
+    geraMenuTemas("pt-br") #chama uma função para construir o menu de temas
 
 def temasEnglish():
     destroiFrame(frameHome)
     geraMenuTemas("en-us")
-
-    '''buttonFase = customtkinter.CTkButton(master=frameHome, text="Fase", bg_color="#028f40")
-    buttonFase.place(relx=0.5, rely=0.1, anchor=tkinter.N)
-    fase1 = Label(frameHome, image=img)
-    fase1.place(relx=0.5, rely=0.45, anchor=tkinter.CENTER)''' #tela de fase
 
 home(frameHome)
 
