@@ -1,0 +1,4 @@
+{ "tema":"Nature", "1":"Flower", "2":"Grass", "3":"Banana", "4":"Coco", "5":"Grape", " 6":"Tree", "7":"Ant", "8":"Bird", "9":"Sunflower", "10":"Elephant", "11":"Hippo", "12" :"Porcupine", "13":"Fern", "14":"Axolotl", "15":"Platypus"}
+{ "tema":"Space"}
+{ "tema":"School"}
+{ "tema":"Circus"}

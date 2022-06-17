@@ -1,7 +1,72 @@
 t "Natureza"
+Facil:
+   -Flor
+   -Grama
+   -Banana
+   -Coco
+   -Uva
+Medio:
+   -Árvore
+   -Formiga
+   -Pássaro
+   -Girassol
+   -Elefante
+Difícil:
+   -Hipopótamo
+   -Porco espinho
+   -Samambaia
+   -Axolote
+   -Ornitorrinco
+   
 t "Espaço"
+Facil:
+   -Sol
+   -Lua
+   -Anéis
+   -Cometa
+   -
+Medio:
+   -Estrela
+   -Planeta
+   -Galáxia
+   -Rocha
+   -Foguete
+Dificil:
+    -Buraco negro
+    -
 t "Escola"
+Facil:
+    -paderno
+    -papel
+    -lápis
+    -estojo
+    -caneta
+Medio:
+    -quadro
+    -professor
+    -escrever
+    -estudar
+    -mochila
+Dificil:
+    -marcador
+    -quadro negro
+    -matemática
+    -recreio
+    -lanchonete
 t "Circo"
+Facil:
+    -palco
+    -magico
+    -pipoca
+    -circo
+   -
+Medio:
+    -
+    -
+Dificil
+    - palhaço
+   -apresentador
+
 
 f "Nível 1"
 f "Nível 2"

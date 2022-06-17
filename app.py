@@ -4,7 +4,7 @@ import customtkinter
 from PIL import ImageTk
 import random
 from functools import partial #como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
-                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
+import json                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -96,24 +96,23 @@ def geraMenuTemas(lingua):
     listaTemas = []
 
     if (lingua == "pt-br"): #se for pt-br ira pegar o arquivo em portugues se nao pega o ingles
-        config = open("language/config_pt.txt", "r", encoding="utf-8")
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
         titulo = customtkinter.CTkButton(master=frameHome, text="Ditado", bg_color=bgColorSecundary, text_font=(fontPrimary))
         titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
 
     else:
-        config = open("language/config_en.txt", "r", encoding="utf-8")
+        config = open("language/json_en.txt", "r", encoding="utf-8")
         titulo = customtkinter.CTkButton(master=frameHome, text="Saying", bg_color=bgColorSecundary, text_font=(fontPrimary))
         titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
-
+    
     texto = config.readlines()
+    listaTemas = []
+
     for linha in texto:
-        if linha[0] == "t": #verifica se é um tema
-            inicio, fim = 3, len(linha)-2
-            tema = linha[inicio:fim]
-            listaTemas.append(tema) #adiciona todos os temas a um lista
-    config.close()
-
-
+        js = json.loads(linha)
+        #print(js["tema"])
+        listaTemas.append(js["tema"]) #adiciona todos os temas a um lista
+        config.close()
 
     frameMenuTemas = Frame(frameTelaTemas, bg=bgColorSecundary, height=500, width=800)
     frameMenuTemas.place(relx=0.437, rely=0.2, anchor=tkinter.N)
