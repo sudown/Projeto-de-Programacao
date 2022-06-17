@@ -1,8 +1,9 @@
 t "Nature"
 t "Park"
 t "Espace"
-f "flower"
+t "Circus"
+# "flower"
 
-l "Level 1"
-l "Level 2"
-l "Level 3"
+l "Easy"
+l "Medium"
+l "Hard "

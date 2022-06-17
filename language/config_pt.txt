@@ -68,6 +68,6 @@ Dificil
    -apresentador
 
 
-f "Nível 1"
-f "Nível 2"
-f "Nível 3 "
+f "Fácil"
+f "Médio"
+f "Difícil "
