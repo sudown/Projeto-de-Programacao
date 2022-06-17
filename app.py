@@ -49,35 +49,69 @@ def home(telaAtual):
     buttonPortugues.place(relx=0.4, rely=0.5, anchor=tkinter.CENTER)
     buttonEnglish.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
 
-def geraMenuFases(nomeDoTema):
+def geraMenuNiveis(nomeDoTema):
     print(nomeDoTema)
-
-
-    frameTelaFases = Frame(frameHome, bg=bgColorSecundary, height=720,width=1280).pack()
+    frameTelaNiveis = Frame(frameHome, bg=bgColorSecundary, height=720,width=1280).pack()
 
     listaFases = []
+    listaNiveis = ["Nível 1", "Nível 2", "Nível 3"]
+
+    frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorSecundary, height=500, width=800)
+    frameMenuNiveis.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+
+    rlx = c = 0.00
+    rly = 0.04
+    for i in range(0, len(listaNiveis)):
+        f_geraFases = partial(geraMenuFases, nomeDoTema, listaNiveis[i])
+        rlx += 0.3
+        c += 1
+        if c == 4:
+            rly += 0.3
+            rlx = 0.3
+            c = 1
+        buttonNivel = customtkinter.CTkButton(frameMenuNiveis, text=listaNiveis[i], text_font=fontPrimary, command=f_geraFases, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        buttonNivel.place(relx=rlx, rely=rly, anchor=tkinter.N)
+
+def geraMenuFases(nomeDoTema, NivelDoTema):
+    print(nomeDoTema, NivelDoTema)
+    
+    frameTelaFases = Frame(frameHome, bg=bgColorSecundary, height=720,width=1280).pack()
+    
+    listaFases = []
     #if (lingua == "pt-br"):##VOU ARRUMAR
-    config = open("language/config_pt.txt", "r", encoding="utf-8")
+    config = open("language/json_pt.txt", "r", encoding="utf-8")
     titulo = customtkinter.CTkButton(master=frameHome, text="Ditado", bg_color=bgColorSecundary, text_font=(fontPrimary))
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     #else:
     #    config = open("language/config_en.txt", "r", encoding="utf-8")
     #    titulo = customtkinter.CTkButton(master=frameHome, text="Saying", bg_color=bgColorSecundary, text_font=(fontPrimary))
     #    titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
-    texto = config.readlines()
+    texto = config.readlines()  
+
+    listaFases = []
     for linha in texto:
-        if linha[0] == "f":  # verifica se é um tema
-            inicio, fim = 3, len(linha) - 2
-            fase = linha[inicio:fim]
-            listaFases.append(fase)  # adiciona todos os temas a um lista
-    config.close()
+        js = json.loads(linha)
+        if js["tema"] == nomeDoTema:
+            config.close()
+            break
+
+    for i in range(1, 16):
+        #print(js[str(i)])
+        listaFases.append(js[str(i)])
 
     frameMenuFases = Frame(frameTelaFases, bg=bgColorSecundary, height=500, width=800)
     frameMenuFases.place(relx=0.437, rely=0.2, anchor=tkinter.N)
 
+    if NivelDoTema == "Nível 1":
+        NumeroDasFases = [0,1,2,3,4] #nivel 1 pega as cinco primeiras fases
+    elif NivelDoTema == "Nível 2":
+        NumeroDasFases = [5,6,7,8,9] #nivel 2 pega as fases do meio
+    else:
+        NumeroDasFases = [10,11,12,13,14] #nivel 2 pega as cinco ultimas fases
+
     rlx = c = 0.00
     rly = 0.04
-    for i in range(0, len(listaFases)):
+    for i in NumeroDasFases:
         f_geraFases = partial(geraMenuFases, listaFases[i])
         rlx += 0.3
         c += 1
@@ -85,11 +119,8 @@ def geraMenuFases(nomeDoTema):
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuFases, text=listaFases[i], text_font=fontPrimary, command=f_geraFases, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        buttonTema = customtkinter.CTkButton(frameMenuFases, text=i+1, text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
-    '''fazer aqui uma função que pegue o nome das fases em um arquivo.txt e gerar o menu de fases.
-       Essa função vai fazer praticamente o mesmo que a menu temas, então pode-se reaproveitar boa parte do seu codigo.
-       Entretando será necessário pensar em um jeito de associar as fases aos seus respectivos temas'''
 
 def geraMenuTemas(lingua):
     frameTelaTemas = Frame(frameHome, bg=bgColorSecundary, height=720, width=1280).pack() #faria mais sentido trocar frameHome por app, mas isso não funcionou
@@ -120,14 +151,14 @@ def geraMenuTemas(lingua):
     rlx = c = 0.00
     rly = 0.04
     for i in range(0, len(listaTemas)):
-        f_geraMenuFases = partial(geraMenuFases, listaTemas[i])
+        f_geraMenuNiveis = partial(geraMenuNiveis, listaTemas[i])
         rlx += 0.3
         c += 1
         if c == 4:
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuFases, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
 def temasPortugues():
