@@ -1,0 +1,8 @@
+t "Natureza"
+t "Espaço"
+t "Escola"
+t "Circo"
+
+f "Nível 1"
+f "Nível 2"
+f "Nível 3 "
