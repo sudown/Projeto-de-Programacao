@@ -1,4 +1,4 @@
-{ "tema":"Nature", "1":"Flower", "2":"Grass", "3":"Banana", "4":"Coco", "5":"Grape", " 6":"Tree", "7":"Ant", "8":"Bird", "9":"Sunflower", "10":"Elephant", "11":"Hippo", "12" :"Porcupine", "13":"Fern", "14":"Axolotl", "15":"Platypus"}
-{ "tema":"Space"}
+{ "tema":"Nature", "1":"Flower", "2":"Grass", "3":"Banana", "4":"Coco", "5":"Grape", "6":"Tree", "7":"Ant", "8":"Bird", "9":"Sunflower", "10":"Elephant", "11":"Hipoppotamus", "12":"Hedgehog", "13":"Fern", "14":"Axolotl", "15":"Platypus"}
+{ "tema":"Space", "1":"Sol", "2":"Lua", "3":"Anéis", "4":"Cometa", "5":"Preto", "6":"Estrela", "7":"Planeta", "8":"Galáxia", "9":"Rocha", "10":"Foguete", "11":"Buraco negro", "12":"Buraco branco", "13":"via lactea", "14":"Axolote", "15":"quasar"}
 { "tema":"School"}
 { "tema":"Circus"}

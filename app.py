@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter
+from playsound import playsound
 import customtkinter
 from PIL import ImageTk
 import random
@@ -128,14 +129,14 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     rlx = c = 0.00
     rly = 0.04
     for i in NumeroDasFases:
-        f_geraFases = partial(geraMenuFases, listaFases[i])
+        tocaAudio = partial(playsound, (f'./sounds/{nomeDoTema}/{listaFases[i]}.mp3')) #fica pra natureza ficara assim ./sounds/Natureza/Flor.mp3
         rlx += 0.3
         c += 1
         if c == 4:
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuFases, text=i+1, text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        buttonTema = customtkinter.CTkButton(frameMenuFases, text=i+1, text_font=fontPrimary, command=tocaAudio, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
 def geraMenuTemas(lingua):

@@ -1,4 +1,4 @@
 { "tema":"Natureza", "1":"Flor", "2":"Grama", "3":"Banana", "4":"Coco", "5":"Uva", "6":"Árvore", "7":"Formiga", "8":"Pássaro", "9":"Girassol", "10":"Elefante", "11":"Hipopótamo", "12":"Porco espinho", "13":"Samambaia", "14":"Axolote", "15":"Ornitorrinco"}
-{ "tema":"Espaço", "1":"Terra", "2":"Lua", "3":"Sol", "4":"Estrela", "5":"Cometa", "6":"Árvore", "7":"Formiga", "8":"Pássaro", "9":"Girassol", "10":"Elefante", "11":"Hipopótamo", "12":"Porco espinho", "13":"Samambaia", "14":"Axolote", "15":"Ornitorrinco"}
+{ "tema":"Espaço", "1":"Sol", "2":"Lua", "3":"Anéis", "4":"Cometa", "5":"Preto", "6":"Estrela", "7":"Planeta", "8":"Galáxia", "9":"Rocha", "10":"Foguete", "11":"Buraco negro", "12":"Buraco branco", "13":"via lactea", "14":"Axolote", "15":"quasar"}
 { "tema":"Escola"}
 { "tema":"Circo"}
