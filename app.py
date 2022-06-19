@@ -93,6 +93,8 @@ def geraMenuNiveis(nomeDoTema, lingua):
             c = 1
         buttonNivel = customtkinter.CTkButton(frameMenuNiveis, text=listaNiveis[i], text_font=fontPrimary, command=f_geraFases, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
         buttonNivel.place(relx=rlx, rely=rly, anchor=tkinter.N)
+    buttonVoltar = customtkinter.CTkButton(frameMenuNiveis, text="← Voltar", text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     print(nomeDoTema, NivelDoTema)
@@ -154,6 +156,8 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
             c = 1
         buttonTema = customtkinter.CTkButton(frameMenuFases, text=i+1, text_font=fontPrimary, command=tocaAudio, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
+    buttonVoltar = customtkinter.CTkButton(frameMenuFases, text="← Voltar", text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def geraMenuTemas(lingua):
     frameTelaTemas = Frame(frameHome, bg=bgColorSecundary, height=720, width=1280).pack() #faria mais sentido trocar frameHome por app, mas isso não funcionou
@@ -195,6 +199,10 @@ def geraMenuTemas(lingua):
             c = 1
         buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
+
+    #buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="✕ Confirmar O Voltar □ Opções", text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command="fazer função de voltar", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def temasPortugues():
     destroiFrame(frameHome) #destroi o frame
