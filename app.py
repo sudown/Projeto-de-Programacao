@@ -36,6 +36,22 @@ bgColorSecundary = "#7C4CAF"
 frameHome = Frame(app, bg=bgColorPrimary, height=720, width=1280)
 frameHome.pack()
 
+def bubble(array):
+    trocou = True
+    fim = len(array) - 1
+    final = len(array) - 1
+    while fim > 0 and trocou:
+        for i in range(final):
+            for i in range(fim):
+                if array[i] > array[i + 1]:
+                    temp = array[i]
+                    array[i] = array[i + 1]
+                    array[i + 1] = temp
+                else:
+                    trocou = False
+            fim = fim - 1
+        final = final - 1
+
 def destroiFrame(frame):
     for item in frame.winfo_children(): #pega itens, um a um do frame e destroi limpando a tela
         item.destroy()
@@ -164,6 +180,8 @@ def geraMenuTemas(lingua):
 
     frameMenuTemas = Frame(frameTelaTemas, bg=bgColorSecundary, height=500, width=800)
     frameMenuTemas.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+
+    bubble(listaTemas)
 
     rlx = c = 0.00
     rly = 0.04
