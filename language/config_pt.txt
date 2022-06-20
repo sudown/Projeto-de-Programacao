@@ -24,7 +24,7 @@ Facil:
    -Lua
    -Anéis
    -Cometa
-   -
+   -escuro
 Medio:
    -Estrela
    -Planeta
@@ -33,10 +33,13 @@ Medio:
    -Foguete
 Dificil:
     -Buraco negro
-    -
+    -buraco branco
+    -alienigena
+    -quasar
+    -via lactea
 t "Escola"
 Facil:
-    -paderno
+    -caderno
     -papel
     -lápis
     -estojo
@@ -59,13 +62,19 @@ Facil:
     -magico
     -pipoca
     -circo
-   -
+    -balão
 Medio:
-    -
-    -
+    -acrobata
+    -crianças
+    -dançarina
+    -animais
+    -domador
 Dificil
-    - palhaço
-   -apresentador
+    -palhaço
+    -apresentador
+    -malabarista
+    -globo da morte
+    -corda bamba
 
 
 f "Fácil"
