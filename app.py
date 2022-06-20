@@ -120,12 +120,12 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     for linha in texto:
         js = json.loads(linha)
         if js["tema"] == nomeDoTema:
-            config.close()
+            listaFases.append(js[str(i)])
             break
 
     for i in range(1, 16):
         listaFases.append(js[str(i)])
-
+    config.close()
     frameMenuFases = Frame(frameTelaFases, bg=bgColorSecundary, height=500, width=800)
     frameMenuFases.place(relx=0.437, rely=0.2, anchor=tkinter.N)
 
@@ -158,6 +158,7 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
     buttonVoltar = customtkinter.CTkButton(frameMenuFases, text="← Voltar", text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
+    faseAtual = listaFases[i]
 
 def geraMenuTemas(lingua):
     frameTelaTemas = Frame(frameHome, bg=bgColorSecundary, height=720, width=1280).pack() #faria mais sentido trocar frameHome por app, mas isso não funcionou
@@ -204,6 +205,41 @@ def geraMenuTemas(lingua):
     buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command="fazer função de voltar", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
+def geraFase(lingua, faseAtual,NumeroDasFases):
+    frameTelaFase = Frame(frameHome, bg=bgColorSecundary, height=720, width=1280).pack()
+
+    if (lingua == "pt-br"):  # se for pt-br ira pegar o arquivo em portugues se nao pega o ingles
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
+        titulo = customtkinter.CTkButton(master=frameHome, text="Ditado", bg_color=bgColorSecundary,
+                                         text_font=(fontPrimary))
+        titulo.place(relx=0.5, rely=0.5, anchor=tkinter.N)
+
+    else:
+        config = open("language/json_en.txt", "r", encoding="utf-8")
+        titulo = customtkinter.CTkButton(master=frameHome, text="Saying", bg_color=bgColorSecundary,
+                                         text_font=(fontPrimary))
+        titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
+
+    texto = config.readlines()
+    listaFases = []
+
+    for linha in texto:
+        js = json.loads(linha)
+        # print(js["tema"])
+        if js["tema"] == nomeDoTema:
+            break
+    for i in range(1, 16):
+        listaFases.append(js[str(i)])
+    config.close()
+    palavraAtualCerta  = listaFases[faseAtual]
+    img = ImageTk.PhotoImage(Image.open(f"./img/{nomeDoTema}/{listaFases[i]}"))
+    img.place(relx=0.5, rely=0.5, anchor=tkinter.N, width=180, height=180)
+
+    entradaPalavra = Entry(frameTelaFase, text="Digite a palavra", background=branco,text_font=fontPrimary)
+    entradaPalavra.place(relx=0.5, rely=0.7, anchor=tkinter.S)
+
+    buttonEnter = customtkinter.CTkButton(frameTelaFase,text= "ENVIAR",bg_color=bgColorSecundary, text_font=fontPrimary)#.pack()
+    buttonEnter.place(relx=0.5, rely=0.8, anchor=tkinter.S)
 def temasPortugues():
     destroiFrame(frameHome) #destroi o frame
     geraMenuTemas("pt-br")#chama uma função para construir o menu de temas
