@@ -210,8 +210,27 @@ def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, ni
     print(nomeDoTema, nivelDoTema, lingua)
     destroiFrame(frameMenuFases)
     frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=10000).pack()
+    ##O mais recomendado é criar uma função, devido ao uso excessivo deste trecho.#
+    if lingua == "pt-br":
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
 
-    img = PhotoImage(file="./img/uk_flag_icon.png")
+    elif lingua == "en-us":
+        config = open("language/json_en.txt", "r", encoding="utf-8")
+    texto = config.readlines()
+
+    listaFases = []
+    for linha in texto:
+        js = json.loads(linha)
+        if js["tema"] == nomeDoTema:
+            config.close()
+            break
+    for i in range(1, 16):
+        listaFases.append(js[str(i)])
+    config.close()
+    ##FIM DO TRECHO REPETITIVO
+
+    #img = PhotoImage(file="./img/uk_flag_icon.png")
+    img = PhotoImage(file=f"./{nomeDoTema}/{listaFases[i].png}")
     imagemFase = Label(frameTelaFase, image=img)
     imagemFase.place(relx=0.5, rely=0.2, anchor=tkinter.N)
 
