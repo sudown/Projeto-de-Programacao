@@ -1,9 +1,0 @@
-t "Nature"
-t "Park"
-t "Espace"
-t "Circus"
-# "flower"
-
-l "Easy"
-l "Medium"
-l "Hard "
