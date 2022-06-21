@@ -192,7 +192,7 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     rly = 0.04
     for i in NumeroDasFases:
         tocaAudio = partial(playsound, (f'./sounds/{unidecode(nomeDoTema)}/{unidecode(listaFases[i])}.mp3'))  # fica pra natureza ficara assim ./sounds/Natureza/Flor.mp3
-        f_geraFase = partial(geraFase, nomeDoTema, i, lingua, frameMenuFases, frameTelaFases, i+1)
+        f_geraFase = partial(geraFase, nomeDoTema, i, lingua, frameMenuFases, frameTelaFases, i+1, tocaAudio)
         rlx += 0.3
         c += 1
         if c == 4:
@@ -206,21 +206,24 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
     #print(nomeDoTema)
 
-def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido):
+def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, tocaAudio):
     print(nomeDoTema, nivelDoTema, lingua)
     destroiFrame(frameMenuFases)
     frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=10000).pack()
 
-    img = PhotoImage(file="./img/uk_flag_icon.png")
+    img = PhotoImage(file="./img/flor.png")
     imagemFase = Label(frameTelaFase, image=img)
-    imagemFase.place(relx=0.5, rely=0.2, anchor=tkinter.N)
+    imagemFase.place(relx=0.5, rely=0.28, anchor=tkinter.N)
+
+    buttomAudio = customtkinter.CTkButton(frameTelaFase, command=tocaAudio)
+    buttomAudio.place(relx=0.62, rely=0.63, height=50, width=50, anchor=tkinter.N)
 
     entradaPalavra = Entry(frameTelaFase, text="Digite a palavra", background=branco, font=fontEntry)
     entradaPalavra.place(relx=0.5, rely=0.9, height=50, width=600, anchor=tkinter.S)
     
     f_verificaPalavra = partial(verificaPalavra, entradaPalavra, nivelEscolhido, lingua, nomeDoTema)
     buttomEnviar = customtkinter.CTkButton(frameTelaFase, text="Enviar", text_font=fontPrimary, command=f_verificaPalavra, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
-    buttomEnviar.place(relx=0.5, rely=0.4, anchor=tkinter.N)
+    buttomEnviar.place(relx=0.75, rely=0.9, anchor=tkinter.SW, height=50)
     
 
 def temasPortugues():
@@ -258,6 +261,24 @@ def temasEnglish():
     destroiFrame(frameHome)
     geraMenuTemas("en-us")
 
+def listarFases(lingua, nomeDoTema):
+    #home(frameHome)
+    if lingua == "pt-br":
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
+    elif lingua == "en-us":
+        config = open("language/json_en.txt", "r", encoding="utf-8")
+    texto = config.readlines()
+
+    listaFases = []
+    for linha in texto:
+        js = json.loads(linha)
+        if js["tema"] == nomeDoTema:
+            config.close()
+            break
+    for i in range(1, 16):
+        listaFases.append(js[str(i)])
+    config.close()
+    return listaFases
 home(frameHome)
 
 app.mainloop()
