@@ -108,9 +108,9 @@ def geraMenuTemas(lingua):
             c = 1
         buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
-
+    #f_voltar = partial(home)
     #buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="✕ Confirmar O Voltar □ Opções", text_font=fontPrimary, command="", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
-    buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command="fazer função de voltar", fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command='sla', fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def geraMenuNiveis(nomeDoTema, lingua):
@@ -211,7 +211,25 @@ def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, ni
     destroiFrame(frameMenuFases)
     frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=10000).pack()
 
-    img = PhotoImage(file="./img/uk_flag_icon.png")
+    ##
+    if lingua == "pt-br":
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
+
+    elif lingua == "en-us":
+        config = open("language/json_en.txt", "r", encoding="utf-8")
+    texto = config.readlines()
+
+    listaFases = []
+    for linha in texto:
+        js = json.loads(linha)
+        if js["tema"] == nomeDoTema:
+            config.close()
+            break
+    for i in range(1, 16):
+        listaFases.append(js[str(i)])
+    config.close()
+
+    img = PhotoImage(file=f"./img/Natureza/flor.png")
     imagemFase = Label(frameTelaFase, image=img)
     imagemFase.place(relx=0.5, rely=0.2, anchor=tkinter.N)
 
@@ -235,7 +253,7 @@ def verificaPalavra(entradaPalavra, nivelEscolhido, lingua, nomeDoTema):
 
     if lingua == "pt-br":
         config = open("language/json_pt.txt", "r", encoding="utf-8")
-        
+
     elif lingua == "en-us":
         config = open("language/json_en.txt", "r", encoding="utf-8")
     texto = config.readlines()
@@ -257,7 +275,24 @@ def verificaPalavra(entradaPalavra, nivelEscolhido, lingua, nomeDoTema):
 def temasEnglish():
     destroiFrame(frameHome)
     geraMenuTemas("en-us")
+def listarFases(lingua, nomeDoTema):
+    #home(frameHome)
+    if lingua == "pt-br":
+        config = open("language/json_pt.txt", "r", encoding="utf-8")
 
-home(frameHome)
+    elif lingua == "en-us":
+        config = open("language/json_en.txt", "r", encoding="utf-8")
+    texto = config.readlines()
+
+    listaFases = []
+    for linha in texto:
+        js = json.loads(linha)
+        if js["tema"] == nomeDoTema:
+            config.close()
+            break
+    for i in range(1, 16):
+        listaFases.append(js[str(i)])
+    config.close()
+    return listaFases
 
 app.mainloop()
