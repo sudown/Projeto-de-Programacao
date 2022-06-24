@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter
 from playsound import playsound
 import customtkinter
-from PIL import ImageTk
+from PIL import Image, ImageTk
 import random
 from functools import partial #como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
 import json                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
@@ -214,15 +214,22 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
     #print(nomeDoTema)
 
+def showImage(imagem):
+    global img
+    img = ImageTk.PhotoImage(Image.open(imagem))
+    imgLabel = Label(image = img)
+    imgLabel.place(relx=0.5, rely=0.28, height=300, width=300, anchor=tkinter.N)
+
 def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida, tocaAudio):
     print(nomeDoTema, nivelDoTema, lingua)
     destroiFrame(frameMenuFases)
     frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=10000).pack()
+    showImage(f'./img/{unidecode(nomeDoTema)}/{unidecode(palavraEscolhida)}.png')
 
     #img = Image.open(f'./img/{unidecode(nomeDoTema)}/{unidecode(palavraEscolhida)}.png')
-    imagem = ImageTk.PhotoImage(file=f'./img/{unidecode(nomeDoTema)}/{unidecode(palavraEscolhida)}.png')
+    '''imagem = ImageTk.PhotoImage(file=f'./img/{unidecode(nomeDoTema)}/{unidecode(palavraEscolhida)}.png')
     imagemFase = Label(frameTelaFase, image=imagem)
-    imagemFase.place(relx=0.5, rely=0.28, height=300, width=300, anchor=tkinter.N)
+    imagemFase.place(relx=0.5, rely=0.28, height=300, width=300, anchor=tkinter.N)'''
 
     altofalante = ImageTk.PhotoImage(file="./img/altofalante.png")
     buttomAudio = customtkinter.CTkButton(frameTelaFase, command=tocaAudio, text="🔈", text_font=(fontPrimary))
