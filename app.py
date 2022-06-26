@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter
+from turtle import width
 from playsound import playsound
 import customtkinter
 from PIL import Image, ImageTk
@@ -12,11 +13,12 @@ customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 app = customtkinter.CTk()
-app.geometry("1280x720")
+#app.geometry("1280x720")
 app.configure(bg="#fff")
 app.title("APP")
 app.configure(bg="#7C4CAF")
 #####DEFININDO VARIÀVEIS GLOBAIS QUE SERÂO USADOS NOS FRAMES##################
+global w, h
 global nomeDoTema
 global nivelDoTema
 global lingua
@@ -26,6 +28,20 @@ global nivelEscolhido
 global palavraEscolhida
 global tocaAudio
 global frameAcertouPalavra
+global alignRight
+
+if app.winfo_screenheight() >= 720 and app.winfo_screenheight() < 1080:
+    width, height = 1280, 720
+    alignRight = 0.75
+elif app.winfo_screenheight() >= 1080:
+    width, height = 1920, 1080
+    alignRight = 0.67
+
+resolution = str(width)+"x"+str(height)
+print(resolution)
+app.geometry(resolution)
+#app.attributes('-fullscreen', True)  
+
 ##########TESTE PARA VER SE VAI DIMINUIR A "BUROCRACIA"##########
 ################### IMAGENS ###############
 #img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
@@ -71,7 +87,7 @@ def destroiFrame(frame):
         item.destroy()
 
 def home():
-    frameInicio = Frame(app, bg=bgColorPrimary, height=720, width=1280)
+    frameInicio = Frame(app, bg=bgColorPrimary, width=width , height=height)
     frameInicio.place(relx=0.5, rely=0.0, anchor=tkinter.N)
     buttonDitado = customtkinter.CTkButton(master=frameInicio, text="Ditado", text_font=(fontPrimary))
     buttonPortugues = customtkinter.CTkButton(master=frameInicio, text="Português", text_font=(fontPrimary), command=temasPortugues)
@@ -82,7 +98,7 @@ def home():
     buttonEnglish.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
 
 def geraMenuTemas(lingua):
-    frameTelaTemas = Frame(app, bg=bgColorPrimary, height=720, width=1280) #faria mais sentido trocar app por app, mas isso não funcionou
+    frameTelaTemas = Frame(app, bg=bgColorPrimary, width=width, height=height) #faria mais sentido trocar app por app, mas isso não funcionou
     frameTelaTemas.place(relx=0.5, rely=0.0, anchor=tkinter.N)
     listaTemas = []
 
@@ -105,8 +121,8 @@ def geraMenuTemas(lingua):
         listaTemas.append(js["tema"]) #adiciona todos os temas a um lista
         config.close()
 
-    frameMenuTemas = Frame(frameTelaTemas, bg=bgColorPrimary, height=500, width=800)
-    frameMenuTemas.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuTemas = Frame(frameTelaTemas, bg=bgColorPrimary, height=height, width=width)
+    frameMenuTemas.place(relx=0.4, rely=0.2, anchor=tkinter.N)
 
     bubble(listaTemas)
 
@@ -128,7 +144,7 @@ def geraMenuTemas(lingua):
 
 def geraMenuNiveis(nomeDoTema, lingua):
     print(nomeDoTema)
-    frameTelaNiveis = Frame(app, bg=bgColorPrimary, height=720,width=1280).pack() #
+    frameTelaNiveis = Frame(app, bg=bgColorPrimary, height=height, width=width).pack() #
 
 
     listaFases = []
@@ -142,8 +158,8 @@ def geraMenuNiveis(nomeDoTema, lingua):
         1 == 1
 
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
-    frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=500, width=1100)
-    frameMenuNiveis.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=height, width=width)
+    frameMenuNiveis.place(relx=0.4, rely=0.2, anchor=tkinter.N)
 
     rlx = c = 0.00
     rly = 0.04
@@ -163,7 +179,7 @@ def geraMenuNiveis(nomeDoTema, lingua):
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
-    frameTelaFases = Frame(app, bg=bgColorPrimary, height=720, width=1280).pack()
+    frameTelaFases = Frame(app, bg=bgColorPrimary, width=width, height=height).pack()
     palavraEscolhida = ""
     listaFases = []
     if lingua == "pt-br":
@@ -185,8 +201,8 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     for i in range(1, 16):
         listaFases.append(js[str(i)])
 
-    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1200)
-    frameMenuFases.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=height, width=width)
+    frameMenuFases.place(relx=0.4, rely=0.2, anchor=tkinter.N)
 
     if lingua == "pt-br":
         if NivelDoTema == "Fácil":
@@ -231,7 +247,7 @@ def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, ni
     print(nomeDoTema, nivelDoTema, lingua)
 
     destroiFrame(frameMenuFases)
-    frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=1000).pack()
+    frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=height, width=width).pack()
 
     global imagem
     imagem = ImageTk.PhotoImage(file=f'./img/{unidecode(nomeDoTema)}/{unidecode(palavraEscolhida)}.png')
@@ -247,7 +263,7 @@ def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, ni
     
     f_verificaPalavra = partial(verificaPalavra, nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida, tocaAudio, entradaPalavra)
     buttomEnviar = customtkinter.CTkButton(frameTelaFase, text="Enviar", text_font=fontPrimary, command=f_verificaPalavra, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
-    buttomEnviar.place(relx=0.75, rely=0.9, anchor=tkinter.SW, height=50)
+    buttomEnviar.place(relx=alignRight, rely=0.9, anchor=tkinter.SW, height=50)
     
 def temasPortugues():
     destroiFrame(app) #destroi o frame
@@ -310,7 +326,7 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
         print("Você Acertou!")
 
 def acertouPalavra(nomeDoTema, nivelDoTema, lingua):
-    frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=500, width=1200)#falta arrumar o height e o width
+    frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=height, width=1200)#falta arrumar o height e o width
     frameAcertouPalavra.place(relx=0.5, rely=0.25, anchor=tkinter.N)
 
     f_tema = partial(geraMenuTemas, lingua)
@@ -337,5 +353,5 @@ def temasEnglish():
 
 home()
 
-
+#app.resizable(False, False)
 app.mainloop()
