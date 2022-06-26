@@ -82,7 +82,6 @@ def home():
     buttonEnglish.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
 
 def geraMenuTemas(lingua):
-
     frameTelaTemas = Frame(app, bg=bgColorPrimary, height=720, width=1280) #faria mais sentido trocar app por app, mas isso não funcionou
     frameTelaTemas.place(relx=0.5, rely=0.0, anchor=tkinter.N)
     listaTemas = []
@@ -127,8 +126,6 @@ def geraMenuTemas(lingua):
     buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command=home, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
-
-
 def geraMenuNiveis(nomeDoTema, lingua):
     print(nomeDoTema)
     frameTelaNiveis = Frame(app, bg=bgColorPrimary, height=720,width=1280).pack() #
@@ -146,7 +143,7 @@ def geraMenuNiveis(nomeDoTema, lingua):
 
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=500, width=1100)
-    frameMenuNiveis.place(relx=0.45, rely=0.2, anchor=tkinter.N)
+    frameMenuNiveis.place(relx=0.437, rely=0.2, anchor=tkinter.N)
 
     rlx = c = 0.00
     rly = 0.04
@@ -166,8 +163,6 @@ def geraMenuNiveis(nomeDoTema, lingua):
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
 def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
-    #print(nomeDoTema, NivelDoTema)
-
     frameTelaFases = Frame(app, bg=bgColorPrimary, height=720, width=1280).pack()
     palavraEscolhida = ""
     listaFases = []
@@ -190,8 +185,8 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     for i in range(1, 16):
         listaFases.append(js[str(i)])
 
-    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1280)
-    frameMenuFases.place(relx=0.38, rely=0.2, anchor=tkinter.N)
+    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1200)
+    frameMenuFases.place(relx=0.437, rely=0.2, anchor=tkinter.N)
 
     if lingua == "pt-br":
         if NivelDoTema == "Fácil":
@@ -220,7 +215,11 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuFases, text=i + 1, text_font=fontPrimary, command=f_geraFase, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        if js[str(i+1)+"star"] == "1":
+            estrela = "⭐"
+        else:
+            estrela = ""
+        buttonTema = customtkinter.CTkButton(frameMenuFases, text=str(i + 1)+estrela, text_font=fontPrimary, command=f_geraFase, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
         
     f_geraMenuNiveis = partial(geraMenuNiveis, nomeDoTema, lingua)
@@ -261,25 +260,52 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
     palavraDigita = palavraDigita.capitalize()
 
     if lingua == "pt-br":
+        arq = "language/json_pt.txt"
         config = open("language/json_pt.txt", "r", encoding="utf-8")
         
     elif lingua == "en-us":
+        arq = "language/json_en.txt"
         config = open("language/json_en.txt", "r", encoding="utf-8")
     texto = config.readlines()
 
     listaFases = []
+    l = c = 0 #l pos da linha onde está o tema
     for linha in texto:
         js = json.loads(linha)
         if js["tema"] == nomeDoTema:
             config.close()
             break
+        l += 1
+        
     for i in range(1, 16):
         listaFases.append(js[str(i)])
     config.close()
+
     palavraCerta = listaFases[nivelEscolhido - 1]
-    print(palavraCerta) 
-    
+    print(palavraCerta)
+    listaLinhas = []
+
     if palavraDigita == palavraCerta:
+        pos = str(nivelEscolhido) + "star"
+        js[pos] = "1"
+        js = str(js)+"\n"
+        js = js.replace("'", '"')
+        listaLinhas.append(js)
+        #print(listaLinhas)
+
+        with open(arq, "r", encoding="utf-8") as arqRead:
+            # reading line by line
+            lines = arqRead.readlines()
+
+        for line in lines:
+            if c != l:
+                listaLinhas.append(line)
+            c += 1
+    
+        with open(arq, "w", encoding="utf-8") as arqWrite:
+            for i in range(c):
+                arqWrite.write(listaLinhas[i])
+
         acertouPalavra(nomeDoTema, nivelDoTema, lingua)
         print("Você Acertou!")
 
