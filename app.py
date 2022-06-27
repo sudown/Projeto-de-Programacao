@@ -22,10 +22,12 @@ global nivelDoTema
 global lingua
 global frameMenuFases
 global frameTelaFases
+global frameTelaNiveis
 global nivelEscolhido
 global palavraEscolhida
 global tocaAudio
 global frameAcertouPalavra
+global frameInicio
 ##########TESTE PARA VER SE VAI DIMINUIR A "BUROCRACIA"##########
 ################### IMAGENS ###############
 #img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
@@ -143,13 +145,13 @@ def geraMenuNiveis(nomeDoTema, lingua):
 
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=500, width=1100)
-    frameMenuNiveis.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuNiveis.place(relx=0.437, rely=0.22, anchor=tkinter.N)
 
     rlx = c = 0.00
     rly = 0.04
     for i in range(0, len(listaNiveis)):
         f_geraFases = partial(geraMenuFases, nomeDoTema, listaNiveis[i], lingua)
-        rlx += 0.3
+        rlx += 0.2895
         c += 1
         if c == 4:
             rly += 0.3
@@ -185,8 +187,8 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     for i in range(1, 16):
         listaFases.append(js[str(i)])
 
-    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1200)
-    frameMenuFases.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1100)
+    frameMenuFases.place(relx=0.437, rely=0.22, anchor=tkinter.N)
 
     if lingua == "pt-br":
         if NivelDoTema == "Fácil":
@@ -209,11 +211,11 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
         palavraEscolhida = listaFases[i]
         tocaAudio = partial(playsound, (f'./sounds/{unidecode(nomeDoTema)}/{unidecode(listaFases[i])}.mp3'))  # fica pra natureza ficara assim ./sounds/Natureza/Flor.mp3
         f_geraFase = partial(geraFase, nomeDoTema, i, lingua, frameMenuFases, frameTelaFases, i+1, palavraEscolhida, tocaAudio)
-        rlx += 0.3
+        rlx += 0.29
         c += 1
         if c == 4:
             rly += 0.3
-            rlx = 0.3
+            rlx = 0.29
             c = 1
         if js[str(i+1)+"star"] == "1":
             estrela = "⭐"
