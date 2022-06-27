@@ -7,6 +7,7 @@ import random
 from functools import partial #como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
 import json                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
 from unidecode import unidecode
+import time
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -39,6 +40,7 @@ global frameInicio
 fontPrimary = "Arial, 24"
 fontEntry = "Helvetica, 30"
 fontAcerto = "Arial, 48"
+fontErro = "Arial,24"
 
 ################### CORES ###############
 azul = "#0091ca"
@@ -313,6 +315,10 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
 
         acertouPalavra(nomeDoTema, nivelDoTema, lingua)
         print("Você Acertou!")
+    else:
+        frameErro = Frame(app, bg="#c9224f", height=10000, width=1000).pack()
+        fraseAcerto = Label(frameErro, text='Você errou, tente novamente!', font=(fontErro),bg=bgColorSecundary, fg="#fff")
+        fraseAcerto.place(relx=0.5, rely=0.2, anchor=tkinter.S)
 
 def acertouPalavra(nomeDoTema, nivelDoTema, lingua):
     frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=500, width=1200)#falta arrumar o height e o width
