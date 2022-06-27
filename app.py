@@ -16,6 +16,9 @@ app.geometry("1280x720")
 app.configure(bg="#fff")
 app.title("APP")
 app.configure(bg="#7C4CAF")
+app.minsize(height=720, width=1280)
+app.maxsize(height=720, width=1280)
+
 #####DEFININDO VARIÀVEIS GLOBAIS QUE SERÂO USADOS NOS FRAMES##################
 global nomeDoTema
 global nivelDoTema
@@ -108,7 +111,7 @@ def geraMenuTemas(lingua):
         config.close()
 
     frameMenuTemas = Frame(frameTelaTemas, bg=bgColorPrimary, height=500, width=800)
-    frameMenuTemas.place(relx=0.437, rely=0.2, anchor=tkinter.N)
+    frameMenuTemas.place(relx=0.4376, rely=0.2, anchor=tkinter.N)
 
     bubble(listaTemas)
 
@@ -145,7 +148,7 @@ def geraMenuNiveis(nomeDoTema, lingua):
 
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=500, width=1100)
-    frameMenuNiveis.place(relx=0.437, rely=0.22, anchor=tkinter.N)
+    frameMenuNiveis.place(relx=0.4315, rely=0.22, anchor=tkinter.N)
 
     rlx = c = 0.00
     rly = 0.04
@@ -188,7 +191,7 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
         listaFases.append(js[str(i)])
 
     frameMenuFases = Frame(frameTelaFases, bg=bgColorPrimary, height=500, width=1100)
-    frameMenuFases.place(relx=0.437, rely=0.22, anchor=tkinter.N)
+    frameMenuFases.place(relx=0.432, rely=0.22, anchor=tkinter.N)
 
     if lingua == "pt-br":
         if NivelDoTema == "Fácil":
@@ -196,14 +199,14 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
         elif NivelDoTema == "Médio":
             NumeroDasFases = [5, 6, 7, 8, 9]  # nivel 2 pega as fases do meio
         else:
-            NumeroDasFases = [10, 11, 12, 13, 14]  # nivel 2 pega as cinco ultimas fases
+            NumeroDasFases = [10, 11, 12, 13, 14]  # nivel 3 pega as cinco ultimas fases
     elif lingua == "en-us":
         if NivelDoTema == "Easy":
             NumeroDasFases = [0, 1, 2, 3, 4]  # nivel 1 pega as cinco primeiras fases
         elif NivelDoTema == "Medium":
             NumeroDasFases = [5, 6, 7, 8, 9]  # nivel 2 pega as fases do meio
         else:
-            NumeroDasFases = [10, 11, 12, 13, 14]  # nivel 2 pega as cinco ultimas fases
+            NumeroDasFases = [10, 11, 12, 13, 14]  # nivel 3 pega as cinco ultimas fases
 
     rlx = c = 0.00
     rly = 0.04
