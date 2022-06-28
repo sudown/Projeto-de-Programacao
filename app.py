@@ -269,10 +269,12 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
     if lingua == "pt-br":
         arq = "language/json_pt.txt"
         config = open("language/json_pt.txt", "r", encoding="utf-8")
+        frase_erro = "Palavra errada, escreva de novo!"
         
     elif lingua == "en-us":
         arq = "language/json_en.txt"
         config = open("language/json_en.txt", "r", encoding="utf-8")
+        frase_erro = "Wrong word, try again!"
     texto = config.readlines()
 
     listaFases = []
@@ -317,8 +319,9 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
         print("Você Acertou!")
     else:
         frameErro = Frame(app, bg="#c9224f", height=10000, width=1000).pack()
-        fraseAcerto = Label(frameErro, text='Você errou, tente novamente!', font=(fontErro),bg=bgColorSecundary, fg="#fff")
-        fraseAcerto.place(relx=0.5, rely=0.2, anchor=tkinter.S)
+        fraseErro = Label(frameErro, text=frase_erro, font=(fontErro),bg=bgColorSecundary, fg="#fff")
+        fraseErro.place(relx=0.5, rely=0.7, anchor=tkinter.N)
+
 
 def acertouPalavra(nomeDoTema, nivelDoTema, lingua):
     frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=500, width=1200)#falta arrumar o height e o width
@@ -330,7 +333,7 @@ def acertouPalavra(nomeDoTema, nivelDoTema, lingua):
 
 
     fraseAcerto = Label(frameAcertouPalavra, text='Parabens! Você acertou a palavra!', font=(fontAcerto), bg=bgColorSecundary, fg="#fff")
-    fraseAcerto.place(relx=0.468, rely=0.3, anchor=tkinter.N)
+    fraseAcerto.place(relx=0.468, rely=0.2, anchor=tkinter.N)
 
     buttomTema = customtkinter.CTkButton(frameAcertouPalavra, text="Temas", text_font=fontPrimary,command=f_tema, fg_color=listaCores[random.randint(0, 5)],hover_color=listaCores[random.randint(0, 5)])
     buttomTema.place(relx=0.25, rely=0.8, anchor=tkinter.S, height=50)
