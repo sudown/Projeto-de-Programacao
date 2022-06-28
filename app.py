@@ -2,12 +2,12 @@ from tkinter import *
 import tkinter
 from playsound import playsound
 import customtkinter
-from PIL import Image, ImageTk
+from PIL import ImageTk
 import random
-from functools import partial #como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
-import json                                #permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
+from functools import \
+    partial  # como não é possivel passar uma função com parametros no campo command de um button, essa biblioteca
+import json  # permite criar uma varivel que recebe a função e o seu parametro. Leiam a linha 118 e 125 preguiçosos
 from unidecode import unidecode
-import time
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -23,6 +23,7 @@ app.maxsize(height=720, width=1280)
 #####DEFININDO VARIÀVEIS GLOBAIS QUE SERÂO USADOS NOS FRAMES##################
 global nomeDoTema
 global nivelDoTema
+global NivelDoTema
 global lingua
 global frameMenuFases
 global frameTelaFases
@@ -34,7 +35,7 @@ global frameAcertouPalavra
 global frameInicio
 ##########TESTE PARA VER SE VAI DIMINUIR A "BUROCRACIA"##########
 ################### IMAGENS ###############
-#img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
+# img = ImageTk.PhotoImage(Image.open("./img/flor.jpg"))
 
 ################### FONTES ############### se for trocar ou adicionar uma cor ou fonte faça por aqui
 fontPrimary = "Arial, 24"
@@ -54,8 +55,10 @@ listaCores = [azul, verde, rosa, branco, laranja, pave]
 
 bgColorPrimary = "#7C4CAF"
 bgColorSecundary = "#673f91"
-#frameHome = Frame(app, bg=bgColorPrimary, height=720, width=1280)
-#frameHome.pack()
+
+
+# frameHome = Frame(app, bg=bgColorPrimary, height=720, width=1280)
+# frameHome.pack()
 
 def bubble(array):
     trocou = True
@@ -73,43 +76,51 @@ def bubble(array):
             fim = fim - 1
         final = final - 1
 
+
 def destroiFrame(frame):
-    for item in frame.winfo_children(): #pega itens, um a um do frame e destroi limpando a tela
+    for item in frame.winfo_children():  # pega itens, um a um do frame e destroi limpando a tela
         item.destroy()
+
 
 def home():
     frameInicio = Frame(app, bg=bgColorPrimary, height=720, width=1280)
     frameInicio.place(relx=0.5, rely=0.0, anchor=tkinter.N)
     buttonDitado = customtkinter.CTkButton(master=frameInicio, text="Ditado", text_font=(fontPrimary))
-    buttonPortugues = customtkinter.CTkButton(master=frameInicio, text="Português", text_font=(fontPrimary), command=temasPortugues)
-    buttonEnglish = customtkinter.CTkButton(master=frameInicio, text="English", text_font=(fontPrimary), command=temasEnglish)
+    buttonPortugues = customtkinter.CTkButton(master=frameInicio, text="Português", text_font=(fontPrimary),
+                                              command=temasPortugues)
+    buttonEnglish = customtkinter.CTkButton(master=frameInicio, text="English", text_font=(fontPrimary),
+                                            command=temasEnglish)
 
     buttonDitado.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     buttonPortugues.place(relx=0.4, rely=0.5, anchor=tkinter.CENTER)
     buttonEnglish.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
 
+
 def geraMenuTemas(lingua):
-    frameTelaTemas = Frame(app, bg=bgColorPrimary, height=720, width=1280) #faria mais sentido trocar app por app, mas isso não funcionou
+    frameTelaTemas = Frame(app, bg=bgColorPrimary, height=720,
+                           width=1280)  # faria mais sentido trocar app por app, mas isso não funcionou
     frameTelaTemas.place(relx=0.5, rely=0.0, anchor=tkinter.N)
     listaTemas = []
 
-    if (lingua == "pt-br"): #se for pt-br ira pegar o arquivo em portugues se nao pega o ingles
+    if (lingua == "pt-br"):  # se for pt-br ira pegar o arquivo em portugues se nao pega o ingles
         config = open("language/json_pt.txt", "r", encoding="utf-8")
-        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
+        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
         titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
 
     else:
         config = open("language/json_en.txt", "r", encoding="utf-8")
-        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
+        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
         titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
-    
+
     texto = config.readlines()
     listaTemas = []
 
     for linha in texto:
         js = json.loads(linha)
-        #print(js["tema"])
-        listaTemas.append(js["tema"]) #adiciona todos os temas a um lista
+        # print(js["tema"])
+        listaTemas.append(js["tema"])  # adiciona todos os temas a um lista
         config.close()
 
     frameMenuTemas = Frame(frameTelaTemas, bg=bgColorPrimary, height=500, width=800)
@@ -127,26 +138,33 @@ def geraMenuTemas(lingua):
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary, command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+        buttonTema = customtkinter.CTkButton(frameMenuTemas, text=listaTemas[i], text_font=fontPrimary,
+                                             command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0, 5)],
+                                             hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
-    buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command=home, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar = customtkinter.CTkButton(frameMenuTemas, text="← Voltar", text_font=fontPrimary, command=home,
+                                           fg_color=listaCores[random.randint(0, 5)],
+                                           hover_color=listaCores[random.randint(0, 5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
-def geraMenuNiveis(nomeDoTema, lingua):
-    print(nomeDoTema)
-    frameTelaNiveis = Frame(app, bg=bgColorPrimary, height=720,width=1280).pack() #
 
+def geraMenuNiveis(nomeDoTema, lingua):
+    global titulo, listaNiveis
+    print(nomeDoTema)
+    frameTelaNiveis = Frame(app, bg=bgColorPrimary, height=720, width=1280).pack()  #
 
     listaFases = []
     if lingua == "pt-br":
         listaNiveis = ["Fácil", "Médio", "Difícil"]
-        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
+        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
     elif lingua == "en-us":
         listaNiveis = ["Easy", "Medium", "Hard"]
-        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
-    else:
-        1 == 1
+        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
+    # else:
+    # para expansões de idiomas
 
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     frameMenuNiveis = Frame(frameTelaNiveis, bg=bgColorPrimary, height=500, width=1100)
@@ -162,23 +180,31 @@ def geraMenuNiveis(nomeDoTema, lingua):
             rly += 0.3
             rlx = 0.3
             c = 1
-        buttonNivel = customtkinter.CTkButton(frameMenuNiveis, text=listaNiveis[i], text_font=fontPrimary, command=f_geraFases, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        buttonNivel = customtkinter.CTkButton(frameMenuNiveis, text=listaNiveis[i], text_font=fontPrimary,
+                                              command=f_geraFases, fg_color=listaCores[random.randint(0, 5)],
+                                              hover_color=listaCores[random.randint(0, 5)])
         buttonNivel.place(relx=rlx, rely=rly, anchor=tkinter.N)
 
     f_geraMenuTemas = partial(geraMenuTemas, lingua)
-    buttonVoltar = customtkinter.CTkButton(frameMenuNiveis, text="← Voltar", text_font=fontPrimary, command=f_geraMenuTemas, fg_color=listaCores[random.randint(0,5)], hover_color=listaCores[random.randint(0,5)])
+    buttonVoltar = customtkinter.CTkButton(frameMenuNiveis, text="← Voltar", text_font=fontPrimary,
+                                           command=f_geraMenuTemas, fg_color=listaCores[random.randint(0, 5)],
+                                           hover_color=listaCores[random.randint(0, 5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
 
+
 def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
+    global titulo, config, js, NumeroDasFases
     frameTelaFases = Frame(app, bg=bgColorPrimary, height=720, width=1280).pack()
     palavraEscolhida = ""
     listaFases = []
     if lingua == "pt-br":
         config = open("language/json_pt.txt", "r", encoding="utf-8")
-        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
+        titulo = customtkinter.CTkButton(master=app, text="Ditado", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
     elif lingua == "en-us":
         config = open("language/json_en.txt", "r", encoding="utf-8")
-        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary, text_font=(fontPrimary))
+        titulo = customtkinter.CTkButton(master=app, text="Saying", command=home, bg_color=bgColorPrimary,
+                                         text_font=(fontPrimary))
     titulo.place(relx=0.5, rely=0.1, anchor=tkinter.N)
     texto = config.readlines()
 
@@ -215,28 +241,37 @@ def geraMenuFases(nomeDoTema, NivelDoTema, lingua):
     for i in NumeroDasFases:
         palavraEscolhida = listaFases[i]
         tocaAudio = partial(playsound, (f'./sounds/{unidecode(nomeDoTema)}/{unidecode(listaFases[i])}.mp3'))  # fica pra natureza ficara assim ./sounds/Natureza/Flor.mp3
-        f_geraFase = partial(geraFase, nomeDoTema, i, lingua, frameMenuFases, frameTelaFases, i+1, palavraEscolhida, tocaAudio)
+        f_geraFase = partial(geraFase, nomeDoTema, i, lingua, frameMenuFases, frameTelaFases, i + 1, palavraEscolhida, tocaAudio)
         rlx += 0.29
         c += 1
         if c == 4:
             rly += 0.3
             rlx = 0.29
             c = 1
-        if js[str(i+1)+"star"] == "1":
+        if js[str(i + 1) + "star"] == "1":
             estrela = "⭐"
         else:
             estrela = ""
-        buttonTema = customtkinter.CTkButton(frameMenuFases, text=str(i + 1)+estrela, text_font=fontPrimary, command=f_geraFase, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+        buttonTema = customtkinter.CTkButton(frameMenuFases, text=str(i + 1) + estrela, text_font=fontPrimary,
+                                             command=f_geraFase, fg_color=listaCores[random.randint(0, 5)],
+                                             hover_color=listaCores[random.randint(0, 5)])
         buttonTema.place(relx=rlx, rely=rly, anchor=tkinter.N)
-        
+
     f_geraMenuNiveis = partial(geraMenuNiveis, nomeDoTema, lingua)
-    buttonVoltar = customtkinter.CTkButton(frameMenuFases, text="← Voltar", text_font=fontPrimary, command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+    buttonVoltar = customtkinter.CTkButton(frameMenuFases, text="← Voltar", text_font=fontPrimary,
+                                           command=f_geraMenuNiveis, fg_color=listaCores[random.randint(0, 5)],
+                                           hover_color=listaCores[random.randint(0, 5)])
     buttonVoltar.place(relx=1, rely=1, anchor=tkinter.SE)
-    #print(nomeDoTema)
+    # print(nomeDoTema)
 
-def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida, tocaAudio):
-    print(nomeDoTema, nivelDoTema, lingua)
 
+def geraFase(nomeDoTema, NivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida,
+             tocaAudio):
+    print(nomeDoTema, NivelDoTema, lingua)
+    if lingua == 'pt-br':
+        EnviarSubmit = 'Enviar'
+    elif lingua == 'en-us':
+        EnviarSubmit = 'Submit'
     destroiFrame(frameMenuFases)
     frameTelaFase = Frame(frameTelaFases, bg="#c9224f", height=10000, width=1000).pack()
 
@@ -251,17 +286,22 @@ def geraFase(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, ni
 
     entradaPalavra = Entry(frameTelaFase, background=branco, font=fontEntry)
     entradaPalavra.place(relx=0.5, rely=0.9, height=50, width=600, anchor=tkinter.S)
-    
-    f_verificaPalavra = partial(verificaPalavra, nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida, tocaAudio, entradaPalavra)
-    buttomEnviar = customtkinter.CTkButton(frameTelaFase, text="Enviar", text_font=fontPrimary, command=f_verificaPalavra, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
-    buttomEnviar.place(relx=0.75, rely=0.9, anchor=tkinter.SW, height=50)
-    
-def temasPortugues():
-    destroiFrame(app) #destroi o frame
-    geraMenuTemas("pt-br")#chama uma função para construir o menu de temas
 
-def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFases, nivelEscolhido, palavraEscolhida, tocaAudio, entradaPalavra):
-    #print(entradaPalavra.get())
+    f_verificaPalavra = partial(verificaPalavra, nomeDoTema, NivelDoTema, lingua, nivelEscolhido, entradaPalavra)
+    buttomEnviar = customtkinter.CTkButton(frameTelaFase, text=EnviarSubmit, text_font=fontPrimary,
+                                           command=f_verificaPalavra, fg_color=listaCores[random.randint(0, 5)],
+                                           hover_color=listaCores[random.randint(0, 5)])
+    buttomEnviar.place(relx=0.75, rely=0.9, anchor=tkinter.SW, height=50)
+
+
+def temasPortugues():
+    destroiFrame(app)  # destroi o frame
+    geraMenuTemas("pt-br")  # chama uma função para construir o menu de temas
+
+
+def verificaPalavra(nomeDoTema, NivelDoTema, lingua, nivelEscolhido, entradaPalavra):
+    # print(entradaPalavra.get())
+    global config, js, arq, frase_erro
     palavraDigita = entradaPalavra.get()
     print(palavraDigita)
     palavraDigita = palavraDigita.capitalize()
@@ -270,7 +310,7 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
         arq = "language/json_pt.txt"
         config = open("language/json_pt.txt", "r", encoding="utf-8")
         frase_erro = "Palavra errada, escreva de novo!"
-        
+
     elif lingua == "en-us":
         arq = "language/json_en.txt"
         config = open("language/json_en.txt", "r", encoding="utf-8")
@@ -278,14 +318,14 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
     texto = config.readlines()
 
     listaFases = []
-    l = c = 0 #l pos da linha onde está o tema
+    l = c = 0  # l pos da linha onde está o tema
     for linha in texto:
         js = json.loads(linha)
         if js["tema"] == nomeDoTema:
             config.close()
             break
         l += 1
-        
+
     for i in range(1, 16):
         listaFases.append(js[str(i)])
     config.close()
@@ -297,10 +337,10 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
     if palavraDigita == palavraCerta:
         pos = str(nivelEscolhido) + "star"
         js[pos] = "1"
-        js = str(js)+"\n"
+        js = str(js) + "\n"
         js = js.replace("'", '"')
         listaLinhas.append(js)
-        #print(listaLinhas)
+        # print(listaLinhas)
 
         with open(arq, "r", encoding="utf-8") as arqRead:
             # reading line by line
@@ -310,38 +350,54 @@ def verificaPalavra(nomeDoTema, nivelDoTema, lingua, frameMenuFases, frameTelaFa
             if c != l:
                 listaLinhas.append(line)
             c += 1
-    
+
         with open(arq, "w", encoding="utf-8") as arqWrite:
             for i in range(c):
                 arqWrite.write(listaLinhas[i])
 
-        acertouPalavra(nomeDoTema, nivelDoTema, lingua)
+        acertouPalavra(nomeDoTema, NivelDoTema, lingua)
         print("Você Acertou!")
     else:
         frameErro = Frame(app, bg="#c9224f", height=10000, width=1000).pack()
-        fraseErro = Label(frameErro, text=frase_erro, font=(fontErro),bg=bgColorSecundary, fg="#fff")
+        fraseErro = Label(frameErro, text=frase_erro, font=(fontErro), bg=bgColorSecundary, fg="#fff")
         fraseErro.place(relx=0.5, rely=0.7, anchor=tkinter.N)
 
 
-def acertouPalavra(nomeDoTema, nivelDoTema, lingua):
-    frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=500, width=1200)#falta arrumar o height e o width
+def acertouPalavra(nomeDoTema, NivelDoTema, lingua):
+    if lingua == 'pt-br':
+        NiveisLevels = 'Níveis'
+        TemasThemes = 'Temas'
+        FasesPhases = 'Fases'
+        Acerto = 'Parabens! Você acertou a palavra!'
+    elif lingua == 'en-us':
+        NiveisLevels = 'Levels'
+        TemasThemes = 'Themes'
+        FasesPhases = 'Phases'
+        Acerto = 'Congratulations! You got the word right!'
+    frameAcertouPalavra = Frame(app, bg=bgColorPrimary, height=500, width=1200)  # falta arrumar o height e o width
     frameAcertouPalavra.place(relx=0.5, rely=0.25, anchor=tkinter.N)
 
     f_tema = partial(geraMenuTemas, lingua)
     f_niveis = partial(geraMenuNiveis, nomeDoTema, lingua)
-    f_fases = partial(geraMenuFases, nomeDoTema, nivelDoTema, lingua)
+    f_fases = partial(geraMenuFases, nomeDoTema, NivelDoTema, lingua)
 
+    fraseAcerto = Label(frameAcertouPalavra, text=Acerto, font=(fontAcerto),
+                        bg=bgColorSecundary, fg="#fff")
+    fraseAcerto.place(relx=0.47, rely=0.2, anchor=tkinter.N)
 
-    fraseAcerto = Label(frameAcertouPalavra, text='Parabens! Você acertou a palavra!', font=(fontAcerto), bg=bgColorSecundary, fg="#fff")
-    fraseAcerto.place(relx=0.468, rely=0.2, anchor=tkinter.N)
-
-    buttomTema = customtkinter.CTkButton(frameAcertouPalavra, text="Temas", text_font=fontPrimary,command=f_tema, fg_color=listaCores[random.randint(0, 5)],hover_color=listaCores[random.randint(0, 5)])
+    buttomTema = customtkinter.CTkButton(frameAcertouPalavra, text=TemasThemes, text_font=fontPrimary, command=f_tema,
+                                         fg_color=listaCores[random.randint(0, 5)],
+                                         hover_color=listaCores[random.randint(0, 5)])
     buttomTema.place(relx=0.25, rely=0.8, anchor=tkinter.S, height=50)
 
-    buttomNiveis = customtkinter.CTkButton(frameAcertouPalavra, text="Níveis", text_font=fontPrimary, command=f_niveis, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+    buttomNiveis = customtkinter.CTkButton(frameAcertouPalavra, text=NiveisLevels, text_font=fontPrimary, command=f_niveis,
+                                           fg_color=listaCores[random.randint(0, 5)],
+                                           hover_color=listaCores[random.randint(0, 5)])
     buttomNiveis.place(relx=0.50, rely=0.8, anchor=tkinter.S, height=50)
 
-    buttomProximo = customtkinter.CTkButton(frameAcertouPalavra, text="Fases", text_font=fontPrimary, command=f_fases, fg_color=listaCores[random.randint(0, 5)], hover_color=listaCores[random.randint(0, 5)])
+    buttomProximo = customtkinter.CTkButton(frameAcertouPalavra, text=FasesPhases, text_font=fontPrimary, command=f_fases,
+                                            fg_color=listaCores[random.randint(0, 5)],
+                                            hover_color=listaCores[random.randint(0, 5)])
     buttomProximo.place(relx=0.75, rely=0.8, anchor=tkinter.S, height=50)
 
 
@@ -349,7 +405,7 @@ def temasEnglish():
     destroiFrame(app)
     geraMenuTemas("en-us")
 
-home()
 
+home()
 
 app.mainloop()
